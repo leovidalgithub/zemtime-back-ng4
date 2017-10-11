@@ -1,0 +1,5 @@
+# Node Files #
+/node_modules
+/bower_components
+
+app/db/chuleta.js
