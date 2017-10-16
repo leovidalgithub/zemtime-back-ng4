@@ -1,6 +1,6 @@
 
-var ids = {
-    database: 'mongodb://192.168.16.40:27017/ia_zemtime_dev' // DEV
+let ids = {
+    database: 'mongodb://192.168.16.40:27017/ia_zemtime_dev' // DEVELOPMENT
 
     // email: {
     //     host: 'smtp.zemsania.com',

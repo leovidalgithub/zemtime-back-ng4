@@ -1,8 +1,8 @@
-var mongoose = require( 'mongoose' ),
+let mongoose = require( 'mongoose' ),
     Schema   = mongoose.Schema;
 // config    = require( '../../config/config' );
 
-var UserSchema = new Schema( {
+let UserSchema = new Schema( {
         candidatoId :     { type : String, trim : true, unique: true },
         cp :              { type : String, trim : true },
         username :        { type : String, trim : true, index: { unique: true } },
@@ -28,7 +28,7 @@ var UserSchema = new Schema( {
 // ********************************** ********************************** **********************************
 
 UserSchema.methods.createNewUser = function( userData ) {
-    var vm = this;
+    let vm = this;
     vm.email         = userData.email;
     vm.admin         = userData.admin;
     vm.supplier      = userData.supplier;
@@ -43,9 +43,9 @@ UserSchema.methods.createNewUser = function( userData ) {
 };
 
 UserSchema.statics.setUserDemand = function( userInfo ) {
-    var clientId = userInfo.clientID;
-    var demandState = userInfo.demandState;
-    var demandDate = userInfo.demandDate;
+    let clientId = userInfo.clientID;
+    let demandState = userInfo.demandState;
+    let demandDate = userInfo.demandDate;
     return this.findByIdAndUpdate( clientId, { demandState : demandState, demandDate : demandDate } );
 };
 
@@ -55,7 +55,7 @@ UserSchema.methods.setPassword = function( password ){
 };
 
 UserSchema.methods.validPassword = function( password ) {
-    var hash = crypto.pbkdf2Sync( password, this.salt, 1000, 64 ).toString( 'hex' );
+    let hash = crypto.pbkdf2Sync( password, this.salt, 1000, 64 ).toString( 'hex' );
     return this.hash === hash;
 };
 
