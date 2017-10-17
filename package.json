@@ -1,18 +1,27 @@
 {
-  "name": "ia-dev-zemtime-back",
-  "version": "1.0.0",
-  "description": "Zemtime Backend",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
+  "name": "zemtime-back",
+  "version": "2.0.0",
+  "description": "Zemtime backend",
+  "main": "app/server-app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=dev PORT=5005 nodemon app/server-app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.zemsania.com/IA/ia-dev-zemtime-back.git"
+  "keywords": [],
+  "author": "Leo Rdgz Vidal",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.5.0",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.0",
+    "express-validator": "^4.2.1",
+    "fs": "0.0.1-security",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.11.13",
+    "mongoose-schema-formatdate": "^1.0.0"
   },
-  "author": "Sergio Fontecha",
-  "license": "ISC"
+  "devDependencies": {
+    "cross-env": "^5.0.5"
+  }
 }
