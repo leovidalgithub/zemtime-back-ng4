@@ -17,8 +17,8 @@ app.use( cors() ); // it must use personal cors object or use this npm-cors-modu
 app.use( '/calendars', require( './controllers/calendars.controller' ) );
 // app.use( '/fill', require( './db/fill' ) ); // only for database developer purposes
 
-conn.then( function(db) {
-    app.listen( app.get( 'port' ), function () {
+conn.then( (db) => {
+    app.listen( app.get( 'port' ), () => {
         console.log( 'Zemtime server running on PORT:' + app.get( 'port' ) + ' - PROCESS:' + process.pid );
     });
     console.log('192.168.16.40 Zemsania DB Server Connected');

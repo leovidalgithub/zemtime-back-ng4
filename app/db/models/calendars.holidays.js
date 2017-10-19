@@ -4,7 +4,7 @@ let mongoose = require('mongoose'),
 module.exports = function (mongoose,varr) {
    
     let CalendarsHolidaysSchema = new Schema({
-        name: { type: String, trim: true, index: { unique: true }, required: true },
+        name: { type: String, trim: true, required: true },
         type: { type: Number, required: true, default: 1 },
         years: { type: Array, required: false }
     }, { collection: 'calendarsholidays', timestamps: { createdAt: 'created_at' } });

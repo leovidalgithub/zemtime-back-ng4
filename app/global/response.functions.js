@@ -1,12 +1,12 @@
-let sendResponse = function (res, status, obj) {
+let sendResponse = (res, status, obj) => {
     return res.status(status).jsonp(obj);
 };
 
-let successResponse = function (res, obj) {
+let successResponse = (res, obj) => {
     return res.status(200).jsonp(obj);
 };
 
-let errorResponse = function (res, status, obj) {
+let errorResponse = (res, status, obj) => {
     return res.status(status).jsonp(obj);
 };
 

@@ -1,6 +1,5 @@
-let validationsSecurity = require('../services/security.service');
-let responseFunctions = require('./response.functions');
 
-global.validationUserToken    = validationsSecurity.validationUserToken;
-global.validationManagerToken = validationsSecurity.validationManagerToken;
-global.responseFunctions      = responseFunctions;
+global.validationManagerToken = require('../services/security.service').validationManagerToken;
+global.validationUserToken = require('../services/security.service').validationUserToken;
+global.response = require('./response.functions');
+global.utils = require('./utils.functions');
