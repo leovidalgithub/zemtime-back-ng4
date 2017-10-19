@@ -4,16 +4,16 @@
 // let uuid = require('node-uuid');
 // let moment = require('moment');
 
-let validationUserToken = function (req, res, next) {
+let validationUserToken = (req, res, next) => {
     console.log('validationUserToken');
     validateToken(req, res, next, 'ROLE_USER');
 }
-let validationManagerToken = function (req, res, next) {
+let validationManagerToken = (req, res, next) => {
     console.log('validationManagerToken');
     validateToken(req, res, next, 'ROLE_MANAGER');
 }
 
-let validateToken = function (req, res, next, role) {
+let validateToken = (req, res, next, role) => {
     // checking token
     // let token = req.query.api_key || req.params.token || req.headers['x-auth-token'];
     if (next) next(); // everything is ok
