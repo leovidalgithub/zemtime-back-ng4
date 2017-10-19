@@ -14,7 +14,7 @@ router.get('/calendars', validationUserToken, (req, res, next) => {
 
 router.post('/createCalendar', validationUserToken, (req, res, next) => {
     let data = req.body;
-    console.log('GET /calendars/createCalendar');
+    console.log('GET /calendars/createCalendar/');
     myHandler.createCalendar(data,
         (newDoc) => {
             newDoc = utils.giveAnArray(newDoc);  // returned object has to be an Array
@@ -22,6 +22,17 @@ router.post('/createCalendar', validationUserToken, (req, res, next) => {
         }, (status, err) => {
             response.errorResponse(res, status, err);
         })
+});
+
+router.post('/updateCalendar', validationUserToken, (req, res, next) => {
+    let calendar = req.body;
+    console.log('GET /calendars/updateCalendar/');
+    myHandler.updateCalendar(calendar,
+        (updatedDoc) => {
+            response.successResponse(res, updatedDoc);
+        }, (status, err) => {
+            response.errorResponse(res, status, err);
+        });
 });
 
 router.get('/deleteCalendar/:id', validationUserToken, (req, res, next) => {

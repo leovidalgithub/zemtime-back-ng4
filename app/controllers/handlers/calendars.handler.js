@@ -38,6 +38,19 @@ function createCalendar(data, onSuccess, onError) {
 }
 
 // API
+// UPDATES A CALENDAR
+function updateCalendar(calendar, onSuccess, onError) {
+    myModel.CalendarsHolidays.findByIdAndUpdate({ _id: new ObjectId(calendar.id) }, calendar, { new : true, upsert : true },
+        (err, updatedDoc) => {
+            if (err || !updatedDoc) {
+                onError('400', err);
+            } else {
+                onSuccess(updatedDoc);
+            }
+        })
+}
+
+// API
 // DELETES A CALENDAR
 function deleteCalendar(calendarId, onSuccess, onError) {
     myModel.CalendarsHolidays.findByIdAndRemove( { _id: new ObjectId(calendarId) },
@@ -53,6 +66,7 @@ function deleteCalendar(calendarId, onSuccess, onError) {
 module.exports = {
     getCalendars: getCalendars,
     createCalendar: createCalendar,
+    updateCalendar: updateCalendar,
     deleteCalendar: deleteCalendar
 }
 
