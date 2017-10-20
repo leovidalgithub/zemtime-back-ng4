@@ -55,7 +55,7 @@ describe('Calendar Module', () => {
       })
     })
 
-    it('should return an error when get all calendars', done => {
+    it('should return an error when all the calendars', done => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
@@ -79,19 +79,17 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            const calendar = await service.generate('Buenos Aires', 1)
-
-            assert.equal(calendar.name, 'Buenos Aires')
-            assert.equal(calendar.type, 1)
-            assert.equal(calendar.years[0].year, 2017)
-            assert.notEqual(calendar.years[0].days.length, 0)
-
+            const calendar = { name: 'Buenos Aires', type: 1, years: [{ year: 2017, days: [] }] }
+            
             const { _id, name, type, years } = await service.create(db, calendar)
+            const calendars = await service.getAll(db)
 
             assert.equal(name, 'Buenos Aires')
             assert.equal(type, 1)
             assert.notEqual(_id, 0)
             assert.notEqual(years.length, 0)
+            assert.equal(years[0].days.length, 0)
+            assert.equal(calendars.length, 6)
 
             done()
           } catch (err) {
@@ -123,6 +121,108 @@ describe('Calendar Module', () => {
 
         db.close()
       })
+    })
+  })
+
+  describe('Get the calendar data by ID', () => {
+    it('should return the calendar data', done => {
+      mongodb.connect(uri, async (error, db) => {
+        if (!error) {
+          try {
+            const { _id, name, type, years } = await service.getById(db, '59e4b195ae78a90920fb94a0')
+
+            assert.notEqual(_id, 0)
+            assert.equal(name, 'Venezuela')
+            assert.equal(type, 1)
+            assert.equal(years.length, 2)
+            assert.equal(years[0].days.length, 15)
+
+            done()
+          } catch (err) {
+            console.error(err)
+            done(err)
+          }
+        } else {
+          console.error(error)
+          done(error)
+        }
+
+        db.close()
+      })
+    })
+
+    it('should return an error when get the calendar by id', done => {
+      mongodb.connect(uri, async (error, db) => {
+        if (!error) {
+          try {
+            await service.getById()
+          } catch ({ message }) {
+            assert.notEqual(message, null)
+            done()
+          }
+        } else {
+          console.error(error)
+          done(error)
+        }
+
+        db.close()
+      })
+    })
+  })
+
+  describe('Delete a calendar', () => {
+    it('should delete the calendar', done => {
+      mongodb.connect(uri, async (error, db) => {
+        if (!error) {
+          try {
+            await service.remove(db, '59e4b1b850d45422ec21cf10')
+            const calendars = await service.getAll(db)
+
+            assert.equal(calendars.length, 5)
+            done()
+          } catch (err) {
+            console.error(err)
+            done(err)
+          }
+        } else {
+          console.error(error)
+          done(error)
+        }
+
+        db.close()
+      })
+    })
+
+    it('should return an error when remove a calendar', done => {
+      mongodb.connect(uri, async (error, db) => {
+        if (!error) {
+          try {
+            await service.remove()
+          } catch ({ message }) {
+            assert.notEqual(message, null)
+            done()
+          }
+        } else {
+          console.error(error)
+          done(error)
+        }
+
+        db.close()
+      })
+    })
+  })
+
+  describe('Update a calendar', () => {
+    it('should return the updated calendar', done => {
+      // TODO: implementar
+      assert.fail('implementar')
+      done()
+    })
+
+    it('should return an error when update a calendar', done => {
+      // TODO: implementar
+      assert.fail('implementar')
+      done()
     })
   })
 })
