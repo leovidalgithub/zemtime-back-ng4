@@ -14,7 +14,7 @@ app.use( bodyParser.urlencoded( { extended: false } ) );
 app.use( bodyParser.json() );
 app.use( cors() ); // it must use personal cors object or use this npm-cors-module but with security rules defined on it in order to restrict traffic
 
-app.use( '/calendars', require( './controllers/calendars.controller' ) );
+app.use( '/calendars', require( './controllers/calendars.holidays.controller' ) );
 // app.use( '/fill', require( './db/fill' ) ); // only for database developer purposes
 
 conn.then( (db) => {
