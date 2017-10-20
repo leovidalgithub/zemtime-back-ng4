@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo:latest
+    restart: always
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null
+  
+  backend:
+    build: .
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    ports:
+     - 3000:3000
+    command: ["dockerize", "-wait", "tcp://mongodb:27017", "-timeout" , "120s", "npm", "start:dev"]
