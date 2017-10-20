@@ -61,9 +61,65 @@ const create = async (db, calendar) => {
  * @param {*} name
  * @param {*} type
  */
-const generate = (name, type) => {
+  const generate = (name, type) => {
   const year = moment().utc().year()
   return { name, type, years: [{ year, days: _generateDays(year) }] }
 }
 
-module.exports = { getAll, create, generate }
+/**
+ * Servicio que devuelve un calendario.
+ * Se le pasa por parametro la instancia de la db y el id del calendario.
+ *
+ * @param {*} db
+ * @param {*} id
+ */
+const getById = async (db, id) => {
+  try {
+    return await model.getById(db, id)
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+/**
+ * Se modifica un calendario.
+ * Se pasa como parámetro el calendario y el body que contiene los cambios.
+ *
+ * @param {*} calendario
+ * @param {*} body
+ */
+const merge = (calendario, body) => {
+  return { ...calendario, ...body }
+}
+
+/**
+ * Servicio que modifica un calendario.
+ * Se le pasa por parametro la instancia de la db y el calendario modificado.
+ *
+ * @param {*} db
+ * @param {*} merged
+ */
+const put = async (db, merged) => {
+  try {
+    return await model.put(db, merged)
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+/**
+ * Servicio que elimina un calendario.
+ * Se le pasa por parametro la instancia de la db y el id del calendario.
+ *
+ * @param {*} db
+ * @param {*} id
+ */
+const remove = async (db, id) => {
+  try {
+    return await model.remove(db, id)
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+module.exports = { getAll, create, generate, getById, merge, put, remove }

@@ -18,6 +18,23 @@ const getAll = async (request, reply, { db }) => {
 }
 
 /**
+ * Handler getById donde se obtiene un calendario.
+ * Se envia por parametro el request, el reply y la conexion a mongo
+ *
+ * @param {*} request
+ * @param {*} reply
+ * @param {*} mongodb
+ */
+const getById = async ({ id }, reply, { db }) => {
+  try {
+    const calendar = await service.getById(db, id)
+    reply.send(calendar)
+  } catch (err) {
+    reply.send(err)
+  }
+}
+
+/**
  * Handler create donde se crea un calendario nuevo.
  * Se envia por parametro el request, el reply y la conexion a mongo.
  *
@@ -25,9 +42,11 @@ const getAll = async (request, reply, { db }) => {
  * @param {*} reply
  * @param {*} mongodb
  */
-const create = async ({ name, type }, reply, { db }) => {
+const create = async ({ body }, reply, { db }) => {
   try {
-    const calendar = service.generate(name, type)
+    //const calendar = service.generate(name, type)
+    const { name, type, year } = body
+    const calendar = { name, type, years: [{ year, days: [] }] }
     const saved = await service.create(db, calendar)
     reply.send(saved)
   } catch (err) {
@@ -35,4 +54,40 @@ const create = async ({ name, type }, reply, { db }) => {
   }
 }
 
-module.exports = { getAll, create }
+/**
+ * Handler update donde se modifica un calendario.
+ * Se envia por parametro el request, el reply y la conexion a mongo.
+ *
+ * @param {*} request
+ * @param {*} reply
+ * @param {*} mongodb
+ */
+const put = async ({ id, body }, reply, { db }) => {
+  try {
+    const calendar = await service.getById(id)
+    const merged = service.merge(calendar, body)
+    const updated = await service.update(db, merged)
+    reply.send(updated)
+  } catch (err) {
+    reply.send(err)
+  }
+}
+
+/**
+ * Handler remove donde se elimina un calendario.
+ * Se envia por parametro el request, el reply y la conexion a mongo.
+ *
+ * @param {*} request
+ * @param {*} reply
+ * @param {*} mongodb
+ */
+const remove = async ({ id }, reply, { db }) => {
+  try {
+    const removed = await service.remove(db, id)
+    reply.send(removed)
+  } catch (err) {
+    reply.send(err)
+  }
+}
+
+module.exports = { getAll, getById, create, put, remove }
