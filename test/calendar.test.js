@@ -125,4 +125,46 @@ describe('Calendar Module', () => {
       })
     })
   })
+
+  describe('Get a calendar', () => {
+    it('should return an existing calendar', done => {
+      mongodb.connect(uri, async (error, db) => {
+        if (!error) {
+          try {
+            const { _id } = await service.getById(db, id)
+            //assert.notEqual(_id, 0)
+            assert.equal(_id, '59e9ed40a13d5617e424d452')
+
+            done()
+          } catch (err) {
+            console.error(err)
+            done(err)
+          }
+        } else {
+          console.error(error)
+          done(error)
+        }
+
+        db.close()
+      })
+    })
+
+    it('should return an error for null calendar', done => {
+      mongodb.connect(uri, async (error, db) => {
+        if (!error) {
+          try {
+            await service.getById(db, null)
+          } catch ({ message }) {
+            assert.notEqual(message, null)
+            done()
+          }
+        } else {
+          console.error(error)
+          done(error)
+        }
+
+        db.close()
+      })
+    })
+  })
 })
