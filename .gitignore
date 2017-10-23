@@ -1,5 +1,11 @@
-# Node Files #
-/node_modules
-/bower_components
+# Hiddens
+.sonarlint
+.nyc_output
 
-app/db/chuleta.js
+# application
+node_modules
+sonarlint.json
+
+# test and plugins
+data
+test/coverage
