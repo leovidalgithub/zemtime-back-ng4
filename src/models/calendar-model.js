@@ -51,7 +51,7 @@ const create = (db, calendar) => {
  */
 const getById = (db, id) => {
   return new Promise((resolve, reject) => {
-    db.collection('calendarsholidays').findOne({ _id: id }, {}, (err, selected) => {
+    db.collection('calendarsholidays').find({ _id: id }, {}, (err, selected) => {
       if (err) {
         reject(err)
       } else {
