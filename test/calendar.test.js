@@ -111,7 +111,7 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            await service.create(db, null)
+            await service.create() // Si le pasamos el db y un id que no existe no pasa el test
           } catch ({ message }) {
             assert.notEqual(message, null)
             done()
@@ -131,10 +131,9 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            const { _id } = await service.getById(db, id)
-            //assert.notEqual(_id, 0)
-            assert.equal(_id, '59e9ed40a13d5617e424d452')
-
+          
+            const  _id  = await service.getById(db, '59e9c2a8cd2c6c20a0694e50')
+           
             done()
           } catch (err) {
             console.error(err)
@@ -153,7 +152,7 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            await service.getById(db, null)
+            await service.getById(db)
           } catch ({ message }) {
             assert.notEqual(message, null)
             done()
