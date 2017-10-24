@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   port: 3000,
   db: {
@@ -10,6 +12,10 @@ module.exports = {
     pass: 'K1Y32Q8bKMbaG6q'
   },
   documentation: {
+    ui: {
+      root: path.join(__dirname, '..', 'documentation', 'dist'),
+      prefix: '/'
+    },
     swagger: {
       info: {
         title: 'Zemtime Backend Documentation',
