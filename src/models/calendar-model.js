@@ -35,7 +35,7 @@ const create = async (db, calendar) => {
  * Se pasa como parámetro la instancia de base de datos y el id del calendario.
  *
  * @param {*} db
- * @param {*} id
+ * @param {*} _id
  */
 const getById = async (db, _id) => {
   try {
@@ -53,8 +53,9 @@ const getById = async (db, _id) => {
  * @param {*} db
  * @param {*} calendar
  */
-const put = async (db, { _id, ...rest }) => {
+const put = async (db, calendar) => {
   try {
+    const { _id, ...rest } = calendar
     const collection = db.collection('calendarsholidays')
     return await collection.updateOne({ _id }, { $set: rest })
   } catch (err) {
@@ -67,7 +68,7 @@ const put = async (db, { _id, ...rest }) => {
  * Se pasa como parámetro la instancia de base de datos y el calendario a actualizar.
  *
  * @param {*} db
- * @param {*} id
+ * @param {*} _id
  */
 const remove = async (db, _id) => {
   try {
@@ -78,4 +79,20 @@ const remove = async (db, _id) => {
   }
 }
 
-module.exports = { getAll, create, getById, put, remove }
+/**
+ * Se obtiene un calendario.
+ * Se pasa como parámetro la instancia de base de datos y el nombre del calendario.
+ *
+ * @param {*} db
+ * @param {*} name
+ */
+const getByName = async (db, name) => {
+  try {
+    const collection = db.collection('calendarsholidays')
+    return await collection.findOne({ name })
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+module.exports = { getAll, create, getById, put, remove, getByName}

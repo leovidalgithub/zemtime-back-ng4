@@ -77,4 +77,19 @@ const remove = async (db, id) => {
   }
 }
 
-module.exports = { getAll, create, getById, put, remove }
+/**
+ * Servicio que devuelve un calendario.
+ * Se le pasa por parametro la instancia de la db y el id del calendario.
+ *
+ * @param {*} db
+ * @param {*} name
+ */
+const getByName = async (db, name) => {
+  try {
+    return await model.getByName(db, name)
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+module.exports = { getAll, create, getById, put, remove, getByName}

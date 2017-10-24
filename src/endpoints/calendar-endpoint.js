@@ -2,7 +2,7 @@ const { getAll, getById, create, put, remove } = require('../handlers/calendar-h
 
 /**
  * Se agregan los handlers de cada endpoint del calendario.
- * Se le pasa como parámetro el servidor.
+ * Se le pasa como parametro el servidor.
  *
  * @param {*} fastify
  */

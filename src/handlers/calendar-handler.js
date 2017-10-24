@@ -64,7 +64,8 @@ const create = async ({ body }, reply, { db }) => {
 const put = async ({ id, body }, reply, { db }) => {
   try {
     const calendar = await service.getById(id)
-    const updated = await service.update(db, { ...calendar, ...body })
+    await service.update(db, { calendar, ...body })
+    const updated = await service.getById(id)
     reply.send(updated)
   } catch (err) {
     reply.send(err)
@@ -88,4 +89,22 @@ const remove = async ({ id }, reply, { db }) => {
   }
 }
 
-module.exports = { getAll, getById, create, put, remove }
+/**
+ * Handler getByName donde se obtiene un calendario.
+ * Se envia por parametro el request, el reply y la conexion a mongo
+ *
+ * @param {*} request
+ * @param {*} reply
+ * @param {*} mongodb
+ */
+
+const getByName = async ({ name }, reply, { db }) => {
+  try {
+    const calendar = await service.getById(db, name)
+    reply.send(calendar)
+  } catch (err) {
+    reply.send(err)
+  }
+}
+
+module.exports = { getAll, getById, create, put, remove, getByName }
