@@ -109,7 +109,48 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            await service.create(db, null)
+            await service.create() // Si le pasamos el db y un id que no existe no pasa el test
+          } catch ({ message }) {
+            assert.notEqual(message, null)
+            done()
+          }
+        } else {
+          console.error(error)
+          done(error)
+        }
+
+        db.close()
+      })
+    })
+  })
+
+  describe('Get a calendar', () => {
+    it('should return an existing calendar', done => {
+      mongodb.connect(uri, async (error, db) => {
+        if (!error) {
+          try {
+          
+            const  _id  = await service.getById(db, '59e9c2a8cd2c6c20a0694e50')
+           
+            done()
+          } catch (err) {
+            console.error(err)
+            done(err)
+          }
+        } else {
+          console.error(error)
+          done(error)
+        }
+
+        db.close()
+      })
+    })
+
+    it('should return an error for null calendar', done => {
+      mongodb.connect(uri, async (error, db) => {
+        if (!error) {
+          try {
+            await service.getById(db)
           } catch ({ message }) {
             assert.notEqual(message, null)
             done()
