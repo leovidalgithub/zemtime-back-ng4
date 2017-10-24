@@ -78,4 +78,20 @@ const remove = async (db, _id) => {
   }
 }
 
-module.exports = { getAll, create, getById, put, remove }
+/**
+ * Se obtiene un calendario.
+ * Se pasa como parámetro la instancia de base de datos y el id del calendario.
+ *
+ * @param {*} db
+ * @param {*} id
+ */
+const getByName = async (db, name) => {
+  try {
+    const collection = db.collection('calendarsholidays')
+    return await collection.findOne({ name })
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+module.exports = { getAll, create, getById, put, remove, getByName}

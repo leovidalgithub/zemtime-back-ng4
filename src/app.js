@@ -10,6 +10,7 @@ const endpoints = require('./endpoints')
 // Plugins
 fastify.register(helmet)
 fastify.register(mongodb, { url: db.url }, err => error(err))
+
 fastify.register(swagger, documentation)
 // Endpoints
 endpoints(fastify)
