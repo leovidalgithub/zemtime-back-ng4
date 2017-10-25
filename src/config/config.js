@@ -16,12 +16,10 @@ const config = {
 const documentation = {
   documentation: {
     swagger: {
-      ui: {
-        root: path.join(__dirname, '..', 'documentation', 'dist')
-      },
+      ui: path.join(__dirname, '..', 'documentation', 'dist'),
       info: {
-        title: 'Zemtime Backend Documentation',
-        description: 'testing the fastify swagger api',
+        title: 'Zemtime Documentation',
+        description: 'Zemtime Backend Documentation',
         version: '2.0.0'
       },
       host: `localhost:${config.port}`,

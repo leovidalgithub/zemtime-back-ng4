@@ -3,6 +3,7 @@ const mongodb = require('fastify-mongodb')
 const helmet = require('fastify-helmet')
 const swagger = require('fastify-swagger')
 const statics = require('fastify-static')
+const serveStatic = require('serve-static')
 
 const { port, db, documentation } = require(`./config/config`)
 const error = require('./handlers/error-handler')
@@ -12,7 +13,9 @@ const endpoints = require('./endpoints')
 fastify.register(mongodb, { url: db.url }, err => error(err))
 fastify.register(helmet)
 fastify.register(swagger, documentation)
-fastify.register(statics, documentation.swagger.ui)
+
+fastify.use(serveStatic(documentation.swagger.ui))
+
 // Endpoints
 endpoints(fastify)
 

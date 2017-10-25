@@ -8,9 +8,6 @@ const path = require('path')
  * @param {*} fastify
  */
 const endpoints = fastify => {
-  // Root endpoint
-  fastify.get('/docs', (request, reply) => reply.sendFile('index.html'))
-
   const directory = path.join(__dirname, 'endpoints')
   fs.readdirSync(directory).forEach(endpoint => require(path.join(directory, endpoint))(fastify))
 }

@@ -52,7 +52,7 @@ module.exports = {
       description: 'Create a new calendar',
       tags: ['calendar'],
       summary: 'Create a new calendar',
-      payload: {
+      body: {
         type: 'object',
         properties: {
           name: { type: 'string' },
@@ -72,14 +72,29 @@ module.exports = {
       description: 'Update the calendar',
       tags: ['calendar'],
       summary: 'Update the selected calendar',
-      properties: {
-        id: { type: 'number' }
+      params: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' }
+        }
       },
-      payload: {
+      body: {
         type: 'object',
         properties: {
           name: { type: 'string' },
-          type: { type: 'number' }
+          type: { type: 'number' },
+          years: {
+            type: 'object',
+            properties: {
+              year: { type: 'number' },
+              days: {
+                type: 'array',
+                items: {
+                  type: 'number'
+                }
+              }
+            }
+          }
         }
       },
       out: {
@@ -94,8 +109,11 @@ module.exports = {
       description: 'Delete a calendar',
       tags: ['calendar'],
       summary: 'Delete the selected calendar',
-      properties: {
-        id: { type: 'number' }
+      params: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' }
+        }
       },
       out: {
         description: 'Succesful response',
