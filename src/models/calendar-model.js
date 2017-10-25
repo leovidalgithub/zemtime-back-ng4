@@ -3,7 +3,7 @@ const error = require('../handlers/error-handler')
  * Se obtiene los calendarios en su totalidad.
  * Se pasa como parámetro la instancia de base de datos.
  *
- * @param {*} db
+ * @param { db } mongodb
  */
 const getAll = async db => {
   try {
@@ -18,7 +18,7 @@ const getAll = async db => {
  * Se crea un nuevo calendario.
  * Se pasa como parámetro la instancia de base de datos y el calendario a agregar.
  *
- * @param {*} db
+ * @param { db } mongodb
  * @param {*} calendar
  */
 const create = async (db, calendar) => {
@@ -86,7 +86,7 @@ const remove = async (mongodb, id) => {
  * Se obtiene un calendario.
  * Se pasa como parámetro la instancia de base de datos y el nombre del calendario.
  *
- * @param {*} db
+ * @param { db } mongodb
  * @param {*} name
  */
 const getByName = async (db, name) => {

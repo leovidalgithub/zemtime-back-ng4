@@ -6,7 +6,7 @@ const model = require('../models/calendar-model')
  * Servicio que retorna todos los calendarios existentes.
  * Se le pasa por parametro la instancia a la db.
  *
- * @param {*} db
+ * @param { db } mongodb
  */
 const getAll = async db => {
   try {
@@ -20,7 +20,7 @@ const getAll = async db => {
  * Servicio para agregar un nuevo calendario.
  * Se le pasa por parametro la instancia de la db y el calendario a agregar.
  *
- * @param {*} db
+ * @param { db } mongodb
  * @param {*} calendar
  */
 const create = async (db, calendar) => {
@@ -82,7 +82,7 @@ const remove = async (mongodb, id) => {
  * Servicio que devuelve un calendario.
  * Se le pasa por parametro la instancia de la db y el id del calendario.
  *
- * @param {*} db
+ * @param { db } mongodb
  * @param {*} name
  */
 const getByName = async (db, name) => {

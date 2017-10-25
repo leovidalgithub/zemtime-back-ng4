@@ -13,9 +13,8 @@ const endpoints = require('./endpoints')
 fastify.register(mongodb, { url: db.url }, err => error(err))
 fastify.register(helmet)
 fastify.register(swagger, documentation)
-
+// Documentation
 fastify.use(serveStatic(documentation.swagger.ui))
-
 // Endpoints
 endpoints(fastify)
 
