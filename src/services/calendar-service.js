@@ -36,12 +36,12 @@ const create = async (db, calendar) => {
  * Servicio que devuelve un calendario.
  * Se le pasa por parametro la instancia de la db y el id del calendario.
  *
- * @param {*} db
+ * @param {*} mongodb
  * @param {*} id
  */
-const getById = async (db, id) => {
+const getById = async (mongodb, id) => {
   try {
-    return await model.getById(db, id)
+    return await model.getById(mongodb, id)
   } catch (err) {
     throw new Error(err)
   }
@@ -51,12 +51,13 @@ const getById = async (db, id) => {
  * Servicio que modifica un calendario.
  * Se le pasa por parametro la instancia de la db y el calendario modificado.
  *
- * @param {*} db
+ * @param {*} mongodb
  * @param {*} calendar
  */
-const put = async (db, calendar) => {
+const put = async (mongodb, data) => {
   try {
-    return await model.put(db, calendar)
+    const { calendar, ...set } = data
+    return await model.put(mongodb, calendar._id, set)
   } catch (err) {
     throw new Error(err)
   }
@@ -66,12 +67,12 @@ const put = async (db, calendar) => {
  * Servicio que elimina un calendario.
  * Se le pasa por parametro la instancia de la db y el id del calendario.
  *
- * @param {*} db
+ * @param {*} mongodb
  * @param {*} id
  */
-const remove = async (db, id) => {
+const remove = async (mongodb, id) => {
   try {
-    return await model.remove(db, id)
+    return await model.remove(mongodb, id)
   } catch (err) {
     throw new Error(err)
   }

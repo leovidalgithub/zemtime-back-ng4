@@ -6,6 +6,7 @@ const { port, database, mocks } = require('./config/config')
 const service = require('../src/services/calendar-service')
 
 describe('Calendar Module', () => {
+  const ObjectId = mongodb.ObjectId
   const mongoServerInstance = new mongoInMemory(port)
   const uri = mongoServerInstance.getMongouri(database)
 
@@ -129,13 +130,16 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            const { _id, name, type, years } = await service.getById(db, '59e4b195ae78a90920fb94a0')
+            const document = { name: 'Capital Federal', type: 1, years: [{ year: 2015, days: [] }] }
+
+            const inserted = await mongoServerInstance.addDocument(database, 'calendarsholidays', document)
+            const { _id, name, type, years } = await service.getById({ db, ObjectId }, inserted._id)
 
             assert.notEqual(_id, 0)
-            assert.equal(name, 'Venezuela')
+            assert.equal(name, 'Capital Federal')
             assert.equal(type, 1)
-            assert.equal(years.length, 2)
-            assert.equal(years[0].days.length, 15)
+            assert.equal(years.length, 1)
+            assert.equal(years[0].days.length, 0)
 
             done()
           } catch (err) {
@@ -175,10 +179,12 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            await service.remove(db, '59e4b195ae78a90920fb94a1')
+            const inserted = await mongoServerInstance.addDocument(database, 'calendarsholidays', {})
+
+            await service.remove({ db, ObjectId }, inserted._id)
             const calendars = await service.getAll(db)
 
-            assert.equal(calendars.length, 5)
+            assert.equal(calendars.length, 7)
             done()
           } catch (err) {
             console.error(err)
@@ -217,16 +223,18 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            const rest = { name: 'Honduras', type: 1 }
-            const calendar = await service.getById(db, '59e4b1b850d45422ec21cf10')
+            const inserted = await mongoServerInstance.addDocument(database, 'calendarsholidays', { years: [{ year: 2017, days: [] }] })
+            const calendar = await service.getById({ db, ObjectId }, inserted._id)
 
-            await service.put(db, { ...calendar, ...rest })
-            const { name, type, years } = await service.getById(db, '59e4b1b850d45422ec21cf10')
+            const set = { name: 'Honduras', type: 1 }
+            await service.put({ db, ObjectId }, { calendar, ...set })
+
+            const { name, type, years } = await service.getById({ db, ObjectId }, calendar._id)
 
             assert.equal(name, 'Honduras')
             assert.equal(type, 1)
             assert.equal(years.length, 1)
-            assert.equal(years[0].days.length, 14)
+            assert.equal(years[0].days.length, 0)
 
             done()
           } catch (err) {

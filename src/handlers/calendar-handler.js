@@ -21,13 +21,13 @@ const getAll = async (request, reply, { db }) => {
  * Handler getById donde se obtiene un calendario.
  * Se envia por parametro el request, el reply y la conexion a mongo
  *
- * @param {*} request
+ * @param { params } request
  * @param {*} reply
  * @param {*} mongodb
  */
-const getById = async ({ id }, reply, { db }) => {
+const getById = async ({ params }, reply, mongodb) => {
   try {
-    const calendar = await service.getById(db, id)
+    const calendar = await service.getById(mongodb, params.id)
     reply.send(calendar)
   } catch (err) {
     reply.send(err)
@@ -38,9 +38,9 @@ const getById = async ({ id }, reply, { db }) => {
  * Handler create donde se crea un calendario nuevo.
  * Se envia por parametro el request, el reply y la conexion a mongo.
  *
- * @param {*} request
+ * @param { body } request
  * @param {*} reply
- * @param {*} mongodb
+ * @param { db } mongodb
  */
 const create = async ({ body }, reply, { db }) => {
   try {
@@ -57,15 +57,15 @@ const create = async ({ body }, reply, { db }) => {
  * Handler update donde se modifica un calendario.
  * Se envia por parametro el request, el reply y la conexion a mongo.
  *
- * @param {*} request
+ * @param { params, body } request
  * @param {*} reply
  * @param {*} mongodb
  */
-const put = async ({ id, body }, reply, { db }) => {
+const put = async ({ params, body }, reply, mongodb) => {
   try {
-    const calendar = await service.getById(id)
-    await service.update(db, { calendar, ...body })
-    const updated = await service.getById(id)
+    const calendar = await service.getById(mongodb, params.id)
+    await service.put(mongodb, { calendar, ...body })
+    const updated = await service.getById(mongodb, params.id)
     reply.send(updated)
   } catch (err) {
     reply.send(err)
@@ -76,13 +76,13 @@ const put = async ({ id, body }, reply, { db }) => {
  * Handler remove donde se elimina un calendario.
  * Se envia por parametro el request, el reply y la conexion a mongo.
  *
- * @param {*} request
+ * @param { params } request
  * @param {*} reply
  * @param {*} mongodb
  */
-const remove = async ({ id }, reply, { db }) => {
+const remove = async ({ params }, reply, mongodb) => {
   try {
-    const removed = await service.remove(db, id)
+    const removed = await service.remove(mongodb, params.id)
     reply.send(removed)
   } catch (err) {
     reply.send(err)
@@ -93,14 +93,14 @@ const remove = async ({ id }, reply, { db }) => {
  * Handler getByName donde se obtiene un calendario.
  * Se envia por parametro el request, el reply y la conexion a mongo
  *
- * @param {*} request
+ * @param { params } request
  * @param {*} reply
- * @param {*} mongodb
+ * @param { db } mongodb
  */
 
-const getByName = async ({ name }, reply, { db }) => {
+const getByName = async ({ params }, reply, { db }) => {
   try {
-    const calendar = await service.getById(db, name)
+    const calendar = await service.getByName(db, params.name)
     reply.send(calendar)
   } catch (err) {
     reply.send(err)

@@ -8,7 +8,7 @@ const error = require('../handlers/error-handler')
 const getAll = async db => {
   try {
     const collection = db.collection('calendarsholidays')
-    return await collection.find({}).toArray()
+    return await collection.find().toArray()
   } catch (err) {
     throw new Error(err)
   }
@@ -34,13 +34,30 @@ const create = async (db, calendar) => {
  * Se obtiene un calendario.
  * Se pasa como parámetro la instancia de base de datos y el id del calendario.
  *
- * @param {*} db
- * @param {*} _id
+ * @param { db, ObjectId } mongodb
+ * @param {*} id
  */
-const getById = async (db, _id) => {
+const getById = async ({ db, ObjectId }, id) => {
   try {
     const collection = db.collection('calendarsholidays')
-    return await collection.findOne({ _id })
+    return await collection.findOne({ _id: ObjectId(id) })
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
+/**
+ * Se actualiza un calendario.
+ * Se pasa como parámetro la instancia de base de datos, el id del calendario y los atributos a actualizar.
+ *
+ * @param { db, ObjectId } mongodb
+ * @param {*} id
+ * @param {*} set
+ */
+const put = async ({ db, ObjectId }, id, set) => {
+  try {
+    const collection = db.collection('calendarsholidays')
+    return await collection.updateOne({ _id: ObjectId(id) }, { $set: set })
   } catch (err) {
     throw new Error(err)
   }
@@ -50,30 +67,13 @@ const getById = async (db, _id) => {
  * Se actualiza un calendario.
  * Se pasa como parámetro la instancia de base de datos y el calendario a actualizar.
  *
- * @param {*} db
- * @param {*} calendar
+ * @param { db, ObjectId } mongodb
+ * @param {*} id
  */
-const put = async (db, calendar) => {
-  try {
-    const { _id, ...rest } = calendar
-    const collection = db.collection('calendarsholidays')
-    return await collection.updateOne({ _id }, { $set: rest })
-  } catch (err) {
-    throw new Error(err)
-  }
-}
-
-/**
- * Se actualiza un calendario.
- * Se pasa como parámetro la instancia de base de datos y el calendario a actualizar.
- *
- * @param {*} db
- * @param {*} _id
- */
-const remove = async (db, _id) => {
+const remove = async ({ db, ObjectId }, id) => {
   try {
     const collection = db.collection('calendarsholidays')
-    return await collection.deleteOne({ _id })
+    return await collection.deleteOne({ _id: ObjectId(id) })
   } catch (err) {
     throw new Error(err)
   }

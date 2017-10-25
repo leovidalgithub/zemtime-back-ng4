@@ -9,12 +9,10 @@ const path = require('path')
  */
 const endpoints = fastify => {
   // Root endpoint
-  fastify.get('/', (request, reply) => reply.send(`Zemtime server`))
+  fastify.get('/docs', (request, reply) => reply.sendFile('index.html'))
 
   const directory = path.join(__dirname, 'endpoints')
-  fs.readdirSync(directory).forEach(endpoint => {
-    require(path.join(directory, endpoint))(fastify)
-  })
+  fs.readdirSync(directory).forEach(endpoint => require(path.join(directory, endpoint))(fastify))
 }
 
 module.exports = endpoints

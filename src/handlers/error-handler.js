@@ -1,7 +1,7 @@
 /**
  * Error handler
  *
- * @param {*} err 
+ * @param {*} err
  */
 const handler = err => {
   if (err) {
