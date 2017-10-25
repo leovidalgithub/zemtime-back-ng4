@@ -34,11 +34,12 @@ const create = async (db, calendar) => {
  * Se obtiene un calendario.
  * Se pasa como parámetro la instancia de base de datos y el id del calendario.
  *
- * @param { db, ObjectId } mongodb
+ * @param {*} mongodb
  * @param {*} id
  */
-const getById = async ({ db, ObjectId }, id) => {
+const getById = async (mongodb, id) => {
   try {
+    const { db, ObjectId } = mongodb
     const collection = db.collection('calendarsholidays')
     return await collection.findOne({ _id: ObjectId(id) })
   } catch (err) {
@@ -50,12 +51,13 @@ const getById = async ({ db, ObjectId }, id) => {
  * Se actualiza un calendario.
  * Se pasa como parámetro la instancia de base de datos, el id del calendario y los atributos a actualizar.
  *
- * @param { db, ObjectId } mongodb
+ * @param {*} mongodb
  * @param {*} id
  * @param {*} set
  */
-const put = async ({ db, ObjectId }, id, set) => {
+const put = async (mongodb, id, set) => {
   try {
+    const { db, ObjectId } = mongodb
     const collection = db.collection('calendarsholidays')
     return await collection.updateOne({ _id: ObjectId(id) }, { $set: set })
   } catch (err) {
@@ -67,11 +69,12 @@ const put = async ({ db, ObjectId }, id, set) => {
  * Se actualiza un calendario.
  * Se pasa como parámetro la instancia de base de datos y el calendario a actualizar.
  *
- * @param { db, ObjectId } mongodb
+ * @param {*} mongodb
  * @param {*} id
  */
-const remove = async ({ db, ObjectId }, id) => {
+const remove = async (mongodb, id) => {
   try {
+    const { db, ObjectId } = mongodb
     const collection = db.collection('calendarsholidays')
     return await collection.deleteOne({ _id: ObjectId(id) })
   } catch (err) {

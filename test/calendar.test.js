@@ -161,6 +161,7 @@ describe('Calendar Module', () => {
           try {
             await service.getById()
           } catch ({ message }) {
+            console.log(message)
             assert.notEqual(message, null)
             done()
           }
@@ -254,7 +255,12 @@ describe('Calendar Module', () => {
       mongodb.connect(uri, async (error, db) => {
         if (!error) {
           try {
-            await service.put()
+            const inserted = await mongoServerInstance.addDocument(database, 'calendarsholidays', { years: [{ year: 2017, days: [] }] })
+            const calendar = await service.getById({ db, ObjectId }, inserted._id)
+
+            const set = { name: 'Honduras', type: 1 }
+
+            await service.put(undefined, { calendar, ...set })
           } catch ({ message }) {
             assert.notEqual(message, null)
             done()
