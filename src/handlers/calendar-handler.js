@@ -63,10 +63,9 @@ const create = async ({ body }, reply, { db }) => {
  */
 const put = async ({ params, body }, reply, mongodb) => {
   try {
-    const calendar = await service.getById(mongodb, params.id)
-    await service.put(mongodb, { calendar, ...body })
-    const updated = await service.getById(mongodb, params.id)
-    reply.send(updated)
+    const calendar = await service.getById(mongodb, body._id)
+    const pepe = await service.put(mongodb, { calendar, ...body })
+    reply.send(pepe)
   } catch (err) {
     reply.send(err)
   }

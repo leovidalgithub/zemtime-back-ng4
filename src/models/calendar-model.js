@@ -5,10 +5,12 @@ const error = require('../handlers/error-handler')
  *
  * @param { db } mongodb
  */
-const getAll = async db => {
+// const getAll = async db => {
+const getAll = db => {
   try {
     const collection = db.collection('calendarsholidays')
-    return await collection.find().toArray()
+    // return await collection.find().toArray()
+    return collection.find().toArray()
   } catch (err) {
     throw new Error(err)
   }
@@ -37,15 +39,24 @@ const create = async (db, calendar) => {
  * @param {*} mongodb
  * @param {*} id
  */
-const getById = async (mongodb, id) => {
+const getById = (mongodb, id) => {
   try {
     const { db, ObjectId } = mongodb
     const collection = db.collection('calendarsholidays')
-    return await collection.findOne({ _id: ObjectId(id) })
+    return collection.findOne({ _id: ObjectId(id) })
   } catch (err) {
     throw new Error(err)
   }
 }
+// const getById = async (mongodb, id) => {
+//   try {
+//     const { db, ObjectId } = mongodb
+//     const collection = db.collection('calendarsholidays')
+//     return await collection.findOne({ _id: ObjectId(id) })
+//   } catch (err) {
+//     throw new Error(err)
+//   }
+// }
 
 /**
  * Se actualiza un calendario.
@@ -55,11 +66,13 @@ const getById = async (mongodb, id) => {
  * @param {*} id
  * @param {*} set
  */
-const put = async (mongodb, id, set) => {
+const put = (mongodb, id, set) => {
   try {
     const { db, ObjectId } = mongodb
     const collection = db.collection('calendarsholidays')
-    return await collection.updateOne({ _id: ObjectId(id) }, { $set: set })
+    // return collection.updateOne({ _id: ObjectId(id) }, { $set: set })
+    delete set._id;
+    return collection.findOneAndUpdate({ _id: ObjectId(id)}, {$set: set}, {upsert:true, returnNewDocument: true})
   } catch (err) {
     throw new Error(err)
   }

@@ -8,9 +8,11 @@ const model = require('../models/calendar-model')
  *
  * @param { db } mongodb
  */
-const getAll = async db => {
+// const getAll = async db => {
+const getAll = db => {
   try {
-    return await model.getAll(db)
+    // return await model.getAll(db)
+    return model.getAll(db)
   } catch (err) {
     throw new Error(err)
   }
@@ -39,13 +41,20 @@ const create = async (db, calendar) => {
  * @param {*} mongodb
  * @param {*} id
  */
-const getById = async (mongodb, id) => {
+const getById = (mongodb, id) => {
   try {
-    return await model.getById(mongodb, id)
+    return model.getById(mongodb, id)
   } catch (err) {
     throw new Error(err)
   }
 }
+// const getById = async (mongodb, id) => {
+//   try {
+//     return await model.getById(mongodb, id)
+//   } catch (err) {
+//     throw new Error(err)
+//   }
+// }
 
 /**
  * Servicio que modifica un calendario.
@@ -54,10 +63,10 @@ const getById = async (mongodb, id) => {
  * @param {*} mongodb
  * @param {*} calendar
  */
-const put = async (mongodb, data) => {
+const put = (mongodb, data) => {
   try {
     const { calendar, ...set } = data
-    return await model.put(mongodb, calendar._id, set)
+    return model.put(mongodb, calendar._id, set)
   } catch (err) {
     throw new Error(err)
   }

@@ -1,9 +1,10 @@
 const path = require('path')
 
 const config = {
-  port: 3000,
+  port: 5005,
   db: {
-    url: `mongodb://192.168.16.40:27017/ia_zemtime_${process.env.NODE_ENV}`
+    // url: `mongodb://192.168.16.40:27017/ia_zemtime_${process.env.NODE_ENV}`
+    url: `mongodb://zemtime_user:pqowpqow@ds249418.mlab.com:49418/zemtime_ng4`
   },
   email: {
     host: 'smtp.zemsania.com',

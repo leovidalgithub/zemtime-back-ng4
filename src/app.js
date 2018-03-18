@@ -1,6 +1,9 @@
 const fastify = require('fastify')()
 const mongodb = require('fastify-mongodb')
-const helmet = require('fastify-helmet')
+
+// const helmet = require('fastify-helmet')
+const cors = require('cors')
+
 const swagger = require('fastify-swagger')
 const statics = require('fastify-static')
 const serveStatic = require('serve-static')
@@ -11,16 +14,19 @@ const endpoints = require('./endpoints')
 
 // Plugins
 fastify.register(mongodb, { url: db.url }, err => error(err))
-fastify.register(helmet)
-fastify.register(swagger, documentation)
+
+// fastify.register(helmet)
+fastify.use(cors())
+
+// fastify.register(swagger, documentation) // Error: onRoute hook not supported!
 // Documentation
-fastify.use(serveStatic(documentation.swagger.ui))
+// fastify.use(serveStatic(documentation.swagger.ui))
 // Endpoints
 endpoints(fastify)
 
 // Runner
 fastify.listen(port, err => {
   error(err)
-  fastify.swagger()
-  console.log(`Zemtime server listening on ${port}`)
+  // fastify.swagger()
+  console.log('Zemtime server listening on', fastify.server.address().port)
 })

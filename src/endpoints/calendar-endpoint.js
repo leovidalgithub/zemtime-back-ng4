@@ -12,7 +12,7 @@ const endpoints = fastify => {
   fastify.get('/calendars/:id', schema.getById, (request, reply) => getById(request, reply, fastify.mongo))
   fastify.get('/calendars/name/:name', schema.getByName, (request, reply) => getByName(request, reply, fastify.mongo))
   fastify.post('/calendars', schema.create, (request, reply) => create(request, reply, fastify.mongo))
-  fastify.put('/calendars/:id', schema.update, (request, reply) => put(request, reply, fastify.mongo))
+  fastify.put('/calendars', schema.update, (request, reply) => put(request, reply, fastify.mongo))
   fastify.delete('/calendars/:id', schema.remove, (request, reply) => remove(request, reply, fastify.mongo))
 }
 

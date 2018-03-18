@@ -72,26 +72,24 @@ module.exports = {
       description: 'Update the calendar',
       tags: ['calendar'],
       summary: 'Update the selected calendar',
-      params: {
-        type: 'object',
-        properties: {
-          id: { type: 'string' }
-        }
-      },
+      // params: {
+      //   type: 'object',
+      //   properties: {
+      //     id: { type: 'string' }
+      //   }
+      // },
       body: {
         type: 'object',
         properties: {
+          _id: { type: 'string' },
           name: { type: 'string' },
           type: { type: 'number' },
           years: {
-            type: 'object',
+            type: 'array',
             properties: {
               year: { type: 'number' },
               days: {
                 type: 'array',
-                items: {
-                  type: 'number'
-                }
               }
             }
           }

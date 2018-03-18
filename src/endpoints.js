@@ -9,7 +9,7 @@ const path = require('path')
  */
 const endpoints = fastify => {
   const directory = path.join(__dirname, 'endpoints')
-  fs.readdirSync(directory).forEach(endpoint => require(path.join(directory, endpoint))(fastify))
+  fs.readdirSync(directory).forEach(endpoint => {require(path.join(directory, endpoint))(fastify)})    
 }
 
 module.exports = endpoints
